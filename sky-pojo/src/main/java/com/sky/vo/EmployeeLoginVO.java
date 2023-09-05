@@ -9,6 +9,9 @@ import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 
+/**
+ * @author liyun
+ */
 @Data
 @Builder
 @NoArgsConstructor
