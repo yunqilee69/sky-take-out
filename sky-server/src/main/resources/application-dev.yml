@@ -6,3 +6,9 @@ sky:
     database: sky
     username: sky
     password: sky
+  qiniu:
+    # 在七牛云的账号中获取
+    access-key: I59Xckq-KTqN6k58Y4yjaP7e6dQcQVWabGOJclVr
+    secret-key: rB8VlGMHETazBYpvh6XXKtL5FWnFXde1auZ_P1kp
+    bucket-name: clueli
+    base-url: http://img.clueli.top/
