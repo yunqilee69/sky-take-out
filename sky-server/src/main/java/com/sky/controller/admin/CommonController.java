@@ -2,7 +2,7 @@ package com.sky.controller.admin;
 
 import com.sky.constant.MessageConstant;
 import com.sky.result.Result;
-import com.sky.utils.QiniuUtil;
+import com.sky.service.QiniuOssService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
@@ -23,9 +23,9 @@ import java.util.UUID;
 @Api(tags = "通用接口")
 @Slf4j
 public class CommonController {
-    
+
     @Autowired
-    private QiniuUtil qiniuUtil;
+    private QiniuOssService qiniuOssService;
 
     /**
      * 文件上传
@@ -41,7 +41,7 @@ public class CommonController {
             // 获取后缀
             String extension = originalFilename.substring(originalFilename.indexOf("."));
             String fileName = UUID.randomUUID().toString() + extension;
-            String filePath = qiniuUtil.upload(file.getInputStream(), fileName);
+            String filePath = qiniuOssService.upload(file.getInputStream(), fileName);
             log.info("上传图片成功，路径：{}", filePath);
             return Result.success(filePath);
         } catch (IOException e) {

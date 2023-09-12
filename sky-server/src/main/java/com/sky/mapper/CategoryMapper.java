@@ -34,7 +34,7 @@ public interface CategoryMapper {
      * 根据id删除分类
      * @param id
      */
-    @Delete("delete from category where id = #{id}")
+    @Delete("deleteBatch from category where id = #{id}")
     void deleteById(Long id);
 
     /**

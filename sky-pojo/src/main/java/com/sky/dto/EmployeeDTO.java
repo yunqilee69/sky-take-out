@@ -10,7 +10,7 @@ import java.io.Serializable;
  * @author liyun
  */
 @Data
-@ApiModel(value = "")
+@ApiModel(description = "员工信息")
 public class EmployeeDTO implements Serializable {
 
     @ApiModelProperty("员工id")

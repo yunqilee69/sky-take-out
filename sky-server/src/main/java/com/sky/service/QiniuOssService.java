@@ -38,8 +38,8 @@ public interface QiniuOssService {
 
     /**
      * 删除七牛云存放的照片
-     * @param key
-     * @return
+     *
+     * @param image
      */
-    public Boolean deleteImage(String image);
+    public void deleteImage(String image);
 }

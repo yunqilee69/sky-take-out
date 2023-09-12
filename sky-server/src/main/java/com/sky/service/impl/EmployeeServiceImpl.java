@@ -9,9 +9,11 @@ import com.sky.context.BaseContext;
 import com.sky.dto.EmployeeDTO;
 import com.sky.dto.EmployeeLoginDTO;
 import com.sky.dto.EmployeePageQueryDTO;
+import com.sky.dto.EmployeePasswordDTO;
 import com.sky.entity.Employee;
 import com.sky.exception.AccountLockedException;
 import com.sky.exception.AccountNotFoundException;
+import com.sky.exception.PasswordEditFailedException;
 import com.sky.exception.PasswordErrorException;
 import com.sky.mapper.EmployeeMapper;
 import com.sky.result.PageResult;
@@ -22,6 +24,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.DigestUtils;
 import org.springframework.util.ObjectUtils;
+import org.springframework.util.StringUtils;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -145,6 +148,32 @@ public class EmployeeServiceImpl implements EmployeeService {
     public void update(EmployeeDTO employeeDTO) {
         Employee employee = new Employee();
         BeanUtils.copyProperties(employeeDTO, employee);
+
+        employeeMapper.update(employee);
+    }
+
+    /**
+     * 修改员工密码
+     * @param employeePasswordDTO
+     */
+    @Override
+    public void editPassword(EmployeePasswordDTO employeePasswordDTO) {
+        Employee employee = employeeMapper.getById(employeePasswordDTO.getEmpId());
+        if (employee == null) {
+            // 账号不存在
+            throw new AccountNotFoundException();
+        }
+
+        // 将旧密码与数据库密码进行对比，正确在进行修改，错误则返回错误
+        String oldPassword = DigestUtils.md5DigestAsHex(employeePasswordDTO.getOldPassword().getBytes());
+        if (!oldPassword.equals(employee.getPassword())) {
+            // 密码不相同，返回错误信息
+            throw new PasswordEditFailedException(MessageConstant.PASSWORD_EDIT_FAILED);
+        }
+
+        // 密码相同可以修改
+        String newPassword = DigestUtils.md5DigestAsHex(employeePasswordDTO.getNewPassword().getBytes());
+        employee.setPassword(newPassword);
 
         employeeMapper.update(employee);
     }

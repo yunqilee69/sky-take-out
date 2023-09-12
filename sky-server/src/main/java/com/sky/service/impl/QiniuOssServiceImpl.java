@@ -96,10 +96,10 @@ public class QiniuOssServiceImpl implements QiniuOssService {
 
     /**
      * 删除七牛云存放的照片
+     *
      * @param image
-     * @return
      */
-    public Boolean deleteImage(String image){
+    public void deleteImage(String image){
         // 从image中截取出文件的名称,使用正则表达式去截取文件名
         // 例如http://img.clueli.top/bc9f7bc1-8859-416f-ae6e-a388678bc835.png截取的结果为bc9f7bc1-8859-416f-ae6e-a388678bc835.png
         String pattern = ".*/([^/]+)$";
@@ -107,23 +107,19 @@ public class QiniuOssServiceImpl implements QiniuOssService {
         Matcher m = r.matcher(image);
         String key = "";
         if (!m.find()) {
-            return false;
+            return ;
         }
         key = m.group(1);
 
-        if (Objects.isNull(checkImage(key))) {
-            return true;
-        } else {
+        if (!Objects.isNull(checkImage(key))) {
             try {
                 BucketManager bucketManager = new BucketManager(getAuth(), getConfiguration());
                 String bucketName = qiniuOssProperties.getBucketName();
                 bucketManager.delete(bucketName, key);
-                return true;
             } catch (QiniuException e) {
                 e.printStackTrace();
             }
         }
-        return false;
     }
 
 }
