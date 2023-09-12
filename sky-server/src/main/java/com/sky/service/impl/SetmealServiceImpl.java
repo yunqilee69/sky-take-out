@@ -57,4 +57,23 @@ public class SetmealServiceImpl implements SetmealService {
         Page<Setmeal> page = setmealMapper.pageQuery(setmealPageQueryDTO);
         return new PageResult(page.getTotal(), page);
     }
+
+    /**
+     * 根据id获取套餐
+     * @param id
+     * @return
+     */
+    @Override
+    public SetmealDTO getByIdWithDish(Long id) {
+        // 获取套餐信息
+        Setmeal setmeal = setmealMapper.getById(id);
+
+        // 获取套餐包含的菜品
+        List<SetmealDish> setmealDishList = setmealDishMapper.getBySetmealId(id);
+
+        SetmealDTO setmealDTO = new SetmealDTO();
+        BeanUtils.copyProperties(setmeal, setmealDTO);
+        setmealDTO.setSetmealDishes(setmealDishList);
+        return setmealDTO;
+    }
 }

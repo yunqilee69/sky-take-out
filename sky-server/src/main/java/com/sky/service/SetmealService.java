@@ -17,4 +17,11 @@ public interface SetmealService {
      * @return
      */
     PageResult pageQuery(SetmealPageQueryDTO setmealPageQueryDTO);
+
+    /**
+     * 根据id获取套餐
+     * @param id
+     * @return
+     */
+    SetmealDTO getByIdWithDish(Long id);
 }

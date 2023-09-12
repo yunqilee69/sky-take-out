@@ -24,6 +24,11 @@ public class SetmealController {
     @Autowired
     private SetmealService setmealService;
 
+    /**
+     * 新增套餐
+     * @param setmealDTO
+     * @return
+     */
     @PostMapping
     @ApiOperation("新增套餐")
     public Result save(@RequestBody SetmealDTO setmealDTO) {
@@ -43,4 +48,14 @@ public class SetmealController {
         return Result.success(pageResult);
     }
 
+    /**
+     * 根据id获取套餐数据
+     * @return
+     */
+    @GetMapping("/{id}")
+    @ApiOperation("根据id获取套餐")
+    public Result<SetmealDTO> getByIdWithDish(@PathVariable Long id) {
+        SetmealDTO setmealDTO = setmealService.getByIdWithDish(id);
+        return Result.success(setmealDTO);
+    }
 }
