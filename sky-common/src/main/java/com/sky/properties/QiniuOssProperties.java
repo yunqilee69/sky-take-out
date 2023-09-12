@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
 @Component
 @ConfigurationProperties(prefix = "sky.qiniu")
 @Data
-public class QiniuProperties {
+public class QiniuOssProperties {
 
     private String accessKey;
     private String secretKey;
