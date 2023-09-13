@@ -14,11 +14,13 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 @Service
 @Slf4j
+@Transactional
 public class SetmealServiceImpl implements SetmealService {
 
     @Autowired
@@ -43,7 +45,7 @@ public class SetmealServiceImpl implements SetmealService {
         setmealDishList.forEach(setmealDish -> {
             setmealDish.setSetmealId(setmeal.getId());
         });
-        setmealDishMapper.saveBatch(setmealDishList);
+        setmealDishMapper.insertBatch(setmealDishList);
     }
 
     /**
@@ -75,5 +77,27 @@ public class SetmealServiceImpl implements SetmealService {
         BeanUtils.copyProperties(setmeal, setmealDTO);
         setmealDTO.setSetmealDishes(setmealDishList);
         return setmealDTO;
+    }
+
+    /**
+     * 修改套餐
+     * @param setmealDTO
+     */
+    @Override
+    public void updateSetmeal(SetmealDTO setmealDTO) {
+        // 更新套餐基本信息
+        Setmeal setmeal = new Setmeal();
+        BeanUtils.copyProperties(setmealDTO, setmeal);
+
+        setmealMapper.update(setmeal);
+
+        // 更新套餐包含的菜品信息，先删除之前的数据，在新增数据
+        setmealDishMapper.deleteBatch(setmealDTO.getId());
+
+        List<SetmealDish> setmealDishes = setmealDTO.getSetmealDishes();
+        setmealDishes.forEach(setmealDish -> {
+            setmealDish.setSetmealId(setmealDTO.getId());
+        });
+        setmealDishMapper.insertBatch(setmealDishes);
     }
 }
