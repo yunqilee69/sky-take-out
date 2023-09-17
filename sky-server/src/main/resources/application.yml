@@ -42,10 +42,15 @@ sky:
     admin-ttl: 72000000
     # 设置前端传递过来的令牌名称
     admin-token-name: token
+    user-secret-key: itheima
+    user-ttl: 72000000
+    user-token-name: authentication
   qiniu:
     # 在七牛云的账号中获取
     access-key: ${sky.qiniu.access-key}
     secret-key: ${sky.qiniu.secret-key}
     bucket-name: ${sky.qiniu.bucket-name}
     base-url: ${sky.qiniu.base-url}
-
+  wechat:
+    appid: ${sky.wechat.appid}
+    secret: ${sky.wechat.secret}
