@@ -2,6 +2,7 @@ package com.sky.controller.admin;
 
 import com.sky.dto.SetmealDTO;
 import com.sky.dto.SetmealPageQueryDTO;
+import com.sky.entity.Setmeal;
 import com.sky.result.PageResult;
 import com.sky.result.Result;
 import com.sky.service.SetmealService;
@@ -11,6 +12,8 @@ import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 /**
  * 套餐管理
@@ -68,6 +71,35 @@ public class SetmealController {
     @ApiOperation("修改套餐")
     public Result updateSetmeal(@RequestBody SetmealDTO setmealDTO) {
         setmealService.updateSetmeal(setmealDTO);
+        return Result.success();
+    }
+
+    /**
+     * 套餐启售、停售
+     * @param status
+     * @param id
+     * @return
+     */
+    @PostMapping("/status/{status}")
+    @ApiOperation("套餐启售、停售")
+    public Result changeSetmealStatus(@PathVariable Integer status, @RequestParam Long id) {
+        log.info("要修改售卖状态的套餐id：{}。 修改的状态为：{}", id, status);
+        Setmeal setmeal = new Setmeal();
+        setmeal.setId(id);
+        setmeal.setStatus(status);
+        setmealService.updateSetmealStatus(setmeal);
+        return Result.success();
+    }
+
+    /**
+     * 批量删除套餐
+     * @param ids
+     * @return
+     */
+    @DeleteMapping
+    @ApiOperation("批量删除套餐")
+    public Result deleteSetmeals(@RequestParam List<Long> ids) {
+        setmealService.deleteSetmeals(ids);
         return Result.success();
     }
 }

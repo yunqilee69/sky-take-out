@@ -12,3 +12,8 @@ sky:
     secret-key: rB8VlGMHETazBYpvh6XXKtL5FWnFXde1auZ_P1kp
     bucket-name: clueli
     base-url: http://img.clueli.top/
+  redis:
+    host: 43.142.121.125
+    port: 6379
+    password: sky
+    database: 0

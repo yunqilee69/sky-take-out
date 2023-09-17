@@ -2,7 +2,10 @@ package com.sky.service;
 
 import com.sky.dto.SetmealDTO;
 import com.sky.dto.SetmealPageQueryDTO;
+import com.sky.entity.Setmeal;
 import com.sky.result.PageResult;
+
+import java.util.List;
 
 public interface SetmealService {
     /**
@@ -30,4 +33,17 @@ public interface SetmealService {
      * @param setmealDTO
      */
     void updateSetmeal(SetmealDTO setmealDTO);
+
+    /**
+     * 套餐启售、停售
+     * @param setmeal
+     */
+    void updateSetmealStatus(Setmeal setmeal);
+
+    /**
+     * 批量删除套餐
+     * @param ids
+     * @return
+     */
+    void deleteSetmeals(List<Long> ids);
 }

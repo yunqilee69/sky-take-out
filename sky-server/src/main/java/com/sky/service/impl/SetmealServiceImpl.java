@@ -9,6 +9,7 @@ import com.sky.entity.SetmealDish;
 import com.sky.mapper.SetmealDishMapper;
 import com.sky.mapper.SetmealMapper;
 import com.sky.result.PageResult;
+import com.sky.service.QiniuOssService;
 import com.sky.service.SetmealService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
@@ -28,6 +29,9 @@ public class SetmealServiceImpl implements SetmealService {
 
     @Autowired
     private SetmealDishMapper setmealDishMapper;
+
+    @Autowired
+    private QiniuOssService qiniuOssService;
 
     /**
      * 新增套餐
@@ -99,5 +103,36 @@ public class SetmealServiceImpl implements SetmealService {
             setmealDish.setSetmealId(setmealDTO.getId());
         });
         setmealDishMapper.insertBatch(setmealDishes);
+    }
+
+    /**
+     * 套餐启售、停售
+     * @param setmeal
+     */
+    @Override
+    public void updateSetmealStatus(Setmeal setmeal) {
+        setmealMapper.update(setmeal);
+    }
+
+    /**
+     * 批量删除套餐
+     * @param ids
+     * @return
+     */
+    @Override
+    public void deleteSetmeals(List<Long> ids) {
+        ids.forEach(id -> {
+            // 获取套餐的图片并进行删除，包含的菜品图片不删除
+            Setmeal setmeal = setmealMapper.getById(id);
+            qiniuOssService.deleteImage(setmeal.getImage());
+
+            // 删除套餐信息
+            setmealMapper.delete(id);
+
+            // 删除套餐包含的菜品信息
+            setmealDishMapper.deleteBatch(id);
+
+        });
+
     }
 }

@@ -1,6 +1,7 @@
 package com.sky.controller.admin;
 
 import com.sky.constant.JwtClaimsConstant;
+import com.sky.context.BaseContext;
 import com.sky.dto.EmployeeDTO;
 import com.sky.dto.EmployeeLoginDTO;
 import com.sky.dto.EmployeePageQueryDTO;
@@ -146,7 +147,8 @@ public class EmployeeController {
     @PutMapping("/editPassword")
     @ApiOperation("修改密码")
     public Result editPassword(@RequestBody EmployeePasswordDTO employeePasswordDTO) {
-        // TODO 前端存在问题，不会将员工的id传过来
+        Long userId = BaseContext.getCurrentId();
+        employeePasswordDTO.setEmpId(userId);
         employeeService.editPassword(employeePasswordDTO);
         return Result.success();
     }
