@@ -66,7 +66,7 @@
             <if test="tablewareNumber != null">tableware_number = #{tablewareNumber},</if>
             <if test="tablewareStatus != null">tableware_status = #{tablewareStatus},</if>
         </set>
-        where id = #{id} and user_id = #{userId}
+        where id = #{id}
     </update>
 
 </mapper>

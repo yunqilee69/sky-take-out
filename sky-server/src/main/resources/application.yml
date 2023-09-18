@@ -54,3 +54,9 @@ sky:
   wechat:
     appid: ${sky.wechat.appid}
     secret: ${sky.wechat.secret}
+  shop:
+    address: 上海市浦东新区金海路2360号
+    # 配送多少米内的顾客
+    distance: 5000
+  gaode:
+    key: e1f7e80b73da40651b5ead2a47de878f
