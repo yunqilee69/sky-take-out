@@ -14,6 +14,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @Slf4j
 public class SkyApplication {
     public static void main(String[] args) {
+        // TODO 接单提醒和催单没完成，完成支付功能后写
         SpringApplication.run(SkyApplication.class, args);
         log.info("server started");
     }
