@@ -6,6 +6,8 @@ import com.sky.enumeration.OperationType;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 
+import java.util.Map;
+
 @Mapper
 public interface UserMapper {
 
@@ -22,4 +24,10 @@ public interface UserMapper {
      * @param user
      */
     void insert(User user);
+
+    /**
+     * 获取指定时间内的用户数量
+     * @return
+     */
+    Integer countByMap(Map map);
 }

@@ -55,9 +55,16 @@ public interface OrderMapper {
     List<Orders> getByStatusAndOrderTimeLT(Integer status, LocalDateTime orderTime);
 
     /**
-     *
+     * 根据动态条件统计营业额数据
      * @param params
      * @return
      */
     Double sumByMap(Map<String, Object> params);
+
+    /**
+     * 根据动态条件统计订单数量
+     * @param params
+     * @return
+     */
+    Integer countByMap(Map<String, Object> params);
 }
